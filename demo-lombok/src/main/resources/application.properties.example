@@ -1,0 +1,7 @@
+## PostgresSQL
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/demo-lombok
+spring.datasource.username=
+spring.datasource.password=
+
+spring.jpa.hibernate.ddl-auto=update
