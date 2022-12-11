@@ -3,7 +3,7 @@ package com.example.demolombok.model;
 import jakarta.persistence.*;
 
 @Entity(name = "costumer")
-public class CostumerModel {
+public class Costumer {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;

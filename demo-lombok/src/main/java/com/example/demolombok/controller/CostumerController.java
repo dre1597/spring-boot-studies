@@ -1,6 +1,6 @@
 package com.example.demolombok.controller;
 
-import com.example.demolombok.model.CostumerModel;
+import com.example.demolombok.model.Costumer;
 import com.example.demolombok.repository.CostumerRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +19,12 @@ public class CostumerController {
 
 
   @GetMapping
-  public ResponseEntity<List<CostumerModel>> index() {
+  public ResponseEntity<List<Costumer>> index() {
     return ResponseEntity.ok(repository.findAll());
   }
 
   @PostMapping()
-  public ResponseEntity<CostumerModel> store(@RequestBody CostumerModel costumer) {
+  public ResponseEntity<Costumer> store(@RequestBody Costumer costumer) {
     return ResponseEntity.ok(repository.save(costumer));
   }
 }
