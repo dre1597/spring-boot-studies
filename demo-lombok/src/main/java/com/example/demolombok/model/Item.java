@@ -10,29 +10,28 @@ import org.hibernate.Hibernate;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-@Entity(name = "product")
+@Entity(name = "item")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Product {
+public class Item {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Column(length = 100, nullable = false)
-  private String description;
+  @ManyToOne(cascade = CascadeType.ALL)
+  private Product product;
 
-  @Column(nullable = false)
   private BigDecimal price;
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-    Product product = (Product) o;
-    return id != null && Objects.equals(id, product.id);
+    Item item = (Item) o;
+    return id != null && Objects.equals(id, item.id);
   }
 
   @Override

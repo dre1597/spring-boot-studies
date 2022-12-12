@@ -2,6 +2,7 @@ package com.example.demolombok.controller;
 
 import com.example.demolombok.model.Product;
 import com.example.demolombok.repository.ProductRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,14 +10,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/product")
+@AllArgsConstructor
 public class ProductController {
   private final ProductRepository repository;
-
-  public ProductController(ProductRepository repository) {
-    this.repository = repository;
-  }
-
-
+  
   @GetMapping
   public ResponseEntity<List<Product>> index() {
     return ResponseEntity.ok(repository.findAll());

@@ -7,32 +7,31 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 
-import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
-@Entity(name = "product")
+@Entity(name = "solicitation")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Product {
-
+public class Solicitation {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  private String id;
 
-  @Column(length = 100, nullable = false)
-  private String description;
+  @ManyToOne(cascade = CascadeType.ALL)
+  private Costumer costumer;
 
-  @Column(nullable = false)
-  private BigDecimal price;
+  @OneToMany(cascade = CascadeType.ALL)
+  @ToString.Exclude
+  private List<Item> items;
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-    Product product = (Product) o;
-    return id != null && Objects.equals(id, product.id);
+    Solicitation order = (Solicitation) o;
+    return id != null && Objects.equals(id, order.id);
   }
 
   @Override

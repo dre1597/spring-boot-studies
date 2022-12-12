@@ -1,8 +1,19 @@
 package com.example.demolombok.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
+
+import java.util.Objects;
 
 @Entity(name = "costumer")
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Costumer {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,36 +25,19 @@ public class Costumer {
   @Column(length = 150, nullable = false)
   private String address;
 
-  public Integer getId() {
-    return id;
-  }
+  @ManyToOne(cascade = CascadeType.ALL)
+  private Solicitation order;
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+    Costumer costumer = (Costumer) o;
+    return id != null && Objects.equals(id, costumer.id);
   }
 
   @Override
-  public String toString() {
-    return "ClientModel{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
-        ", address='" + address + '\'' +
-        '}';
+  public int hashCode() {
+    return getClass().hashCode();
   }
 }
