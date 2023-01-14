@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.Product;
 import com.example.demo.service.ProductService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class ProductController {
 
   @PostMapping
   public ResponseEntity<Product> save(@RequestBody Product product) {
-    return ResponseEntity.status(201).body(service.save(product));
+    return ResponseEntity.status(HttpStatus.CREATED).body(service.save(product));
   }
 
   @GetMapping(value = "/{id}")
