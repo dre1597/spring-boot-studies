@@ -5,11 +5,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class AnimeService {
-  private final List<Anime> animes = List.of(new Anime(1L, "Shingeki no Kyoujin"), new Anime(2L, "Gintama"));
+  private static final List<Anime> animes;
+
+  static {
+    animes = new ArrayList<>(List.of(new Anime(1L, "Shingeki no Kyoujin"), new Anime(2L, "Gintama")));
+  }
 
 //  private final AnimeRepository animeRepository;
 
@@ -23,6 +29,15 @@ public class AnimeService {
         .filter(anime -> anime.getId().equals(id))
         .findFirst()
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_GATEWAY, "Anime not found"));
+  }
+
+  public void save(Anime anime) {
+    anime.setId(ThreadLocalRandom.current().nextLong(3, 100000));
+    animes.add(anime);
+  }
+
+  public void delete(long id) {
+    animes.remove(findById(id));
   }
 }
 
