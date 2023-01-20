@@ -1,0 +1,11 @@
+server:
+  error:
+    include-stacktrace: on_param
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/databaseName?useSSL=false
+    username: username
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
