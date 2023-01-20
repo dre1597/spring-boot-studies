@@ -40,6 +40,13 @@ public class AnimeController {
     animeService.save(anime);
   }
 
+  @PutMapping(path = "/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void update(@RequestBody Anime anime) {
+    log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+    animeService.replace(anime);
+  }
+
   @DeleteMapping(path = "/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable long id) {
