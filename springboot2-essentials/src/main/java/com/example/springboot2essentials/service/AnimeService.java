@@ -7,6 +7,8 @@ import com.example.springboot2essentials.repository.AnimeRepository;
 import com.example.springboot2essentials.request.AnimePostRequestBody;
 import com.example.springboot2essentials.request.AnimePutRequestBody;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +19,8 @@ public class AnimeService {
 
   private final AnimeRepository animeRepository;
 
-  public List<Anime> find() {
-    return animeRepository.findAll();
+  public Page<Anime> find(Pageable pageable) {
+    return animeRepository.findAll(pageable);
   }
 
   public Anime findByIdOrThrowBadRequestException(long id) {
