@@ -14,7 +14,7 @@
     <name>springboot2-essentials</name>
     <description>springboot2-essentials</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     </properties>
