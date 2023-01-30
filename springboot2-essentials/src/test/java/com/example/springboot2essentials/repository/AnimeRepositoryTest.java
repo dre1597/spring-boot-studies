@@ -1,6 +1,7 @@
 package com.example.springboot2essentials.repository;
 
 import com.example.springboot2essentials.domain.Anime;
+import com.example.springboot2essentials.util.AnimeCreator;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ class AnimeRepositoryTest {
 
   @Test
   void shouldBePossibleToSaveAnAnime() {
-    Anime animeToBeSaved = createAnime();
+    Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
     Anime savedAnime = this.animeRepository.save(animeToBeSaved);
 
     Assertions.assertThat(savedAnime).isNotNull();
@@ -29,7 +30,7 @@ class AnimeRepositoryTest {
 
   @Test
   void shouldNotBePossibleToSavenAnAnimeWithoutAnName() {
-    Anime animeToBeSaved = createAnime();
+    Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
     animeToBeSaved.setName("");
 
@@ -40,7 +41,7 @@ class AnimeRepositoryTest {
 
   @Test
   void shouldNotBePossibleToSavenAnAnimeWithNullAsNameValue() {
-    Anime animeToBeSaved = createAnime();
+    Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
     animeToBeSaved.setName(null);
 
@@ -51,7 +52,7 @@ class AnimeRepositoryTest {
 
   @Test
   void shouldBePossibleToUpdateAnAnime() {
-    Anime animeToBeSaved = createAnime();
+    Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
     Anime savedAnime = this.animeRepository.save(animeToBeSaved);
 
@@ -68,7 +69,7 @@ class AnimeRepositoryTest {
 
   @Test
   void shouldBePossibleToDeleteAnAnime() {
-    Anime animeToBeSaved = createAnime();
+    Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
     Anime savedAnime = this.animeRepository.save(animeToBeSaved);
 
@@ -82,7 +83,7 @@ class AnimeRepositoryTest {
 
   @Test
   void shouldBePossibleToFindAnAnimeByItName() {
-    Anime animeToBeSaved = createAnime();
+    Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
     Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
@@ -114,7 +115,4 @@ class AnimeRepositoryTest {
         .withMessageContaining("The anime name connot be empty");
   }
 
-  private Anime createAnime() {
-    return Anime.builder().name("Test anime").build();
-  }
 }
