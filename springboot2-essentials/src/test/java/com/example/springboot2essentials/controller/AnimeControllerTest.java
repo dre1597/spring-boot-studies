@@ -27,8 +27,12 @@ class AnimeControllerTest {
   @BeforeEach
   void setup() {
     PageImpl<Anime> animePage = new PageImpl<>(List.of(AnimeCreator.createValidAnime()));
+
     BDDMockito.when(animeServiceMock.find(ArgumentMatchers.any()))
         .thenReturn(animePage);
+
+    BDDMockito.when(animeServiceMock.findAllNonPageable())
+        .thenReturn(List.of(AnimeCreator.createValidAnime()));
   }
 
   @Test
@@ -42,6 +46,19 @@ class AnimeControllerTest {
         .isNotEmpty()
         .hasSize(1);
     Assertions.assertThat(animePage.toList().get(0).getName()).isEqualTo(expectedName);
+  }
+
+  @Test
+  void shouldBePossibleToListAnimesWithoutPagination() {
+    String expectedName = AnimeCreator.createValidAnime().getName();
+
+    List<Anime> animes = animeController.findAll().getBody();
+
+    Assertions.assertThat(animes).
+        isNotNull()
+        .isNotEmpty()
+        .hasSize(1);
+    Assertions.assertThat(animes.get(0).getName()).isEqualTo(expectedName);
   }
 
 }
