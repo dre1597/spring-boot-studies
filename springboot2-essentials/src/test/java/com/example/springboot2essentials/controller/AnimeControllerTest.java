@@ -27,15 +27,17 @@ class AnimeControllerTest {
   @BeforeEach
   void setup() {
     PageImpl<Anime> animePage = new PageImpl<>(List.of(AnimeCreator.createValidAnime()));
-
     BDDMockito.when(animeServiceMock.find(ArgumentMatchers.any()))
         .thenReturn(animePage);
 
     BDDMockito.when(animeServiceMock.findAllNonPageable())
         .thenReturn(List.of(AnimeCreator.createValidAnime()));
 
-    BDDMockito.when(animeServiceMock.findByIdOrThrowBadRequestException(ArgumentMatchers.any()))
+    BDDMockito.when(animeServiceMock.findByIdOrThrowBadRequestException(ArgumentMatchers.anyLong()))
         .thenReturn(AnimeCreator.createValidAnime());
+
+    BDDMockito.when(animeServiceMock.findByName(ArgumentMatchers.anyString()))
+        .thenReturn(List.of(AnimeCreator.createValidAnime()));
   }
 
   @Test
@@ -76,4 +78,16 @@ class AnimeControllerTest {
     Assertions.assertThat(anime.getId()).isNotNull().isEqualTo(expectedId);
   }
 
+  @Test
+  void shouldBePossibleToFindAnAnimeByName() {
+    String expectedName = AnimeCreator.createValidAnime().getName();
+
+    List<Anime> animes = animeController.findByName("anime").getBody();
+
+    Assertions.assertThat(animes).
+        isNotNull()
+        .isNotEmpty()
+        .hasSize(1);
+    Assertions.assertThat(animes.get(0).getName()).isEqualTo(expectedName);
+  }
 }
