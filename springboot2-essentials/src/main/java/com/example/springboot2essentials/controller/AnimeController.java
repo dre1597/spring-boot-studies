@@ -41,14 +41,13 @@ public class AnimeController {
   }
 
   @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
-  public Anime save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody) {
-    return animeService.save(animePostRequestBody);
+  public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody) {
+    return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
   }
 
   @PutMapping
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public ResponseEntity<Void> update(@RequestBody @Valid  AnimePutRequestBody animePutRequestBody) {
+  public ResponseEntity<Void> update(@RequestBody @Valid AnimePutRequestBody animePutRequestBody) {
     animeService.replace(animePutRequestBody);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
