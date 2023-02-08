@@ -119,10 +119,9 @@ class AnimeControllerTest {
 
   @Test
   void shouldBePossibleToAddAnAnime() {
-    Anime anime = animeController.save(AnimePostRequestBodyCreator.createAnimePostRequestBody());
+    Anime anime = animeController.save(AnimePostRequestBodyCreator.createAnimePostRequestBody()).getBody();
 
     Assertions.assertThat(anime).isNotNull().isEqualTo(AnimeCreator.createValidAnime());
-
   }
 
   @Test
@@ -134,7 +133,6 @@ class AnimeControllerTest {
     ResponseEntity<Void> entity = animeController.update(AnimePutRequestBodyCreator.createAnimePutRequestBody());
 
     Assertions.assertThat(entity).isNotNull();
-
     Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
   }
 
@@ -147,7 +145,6 @@ class AnimeControllerTest {
     ResponseEntity<Void> entity = animeController.delete(1);
 
     Assertions.assertThat(entity).isNotNull();
-
     Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
   }
 }
