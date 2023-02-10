@@ -37,6 +37,7 @@ public class AnimeController {
   }
 
   @GetMapping("/filterBy")
+//  public ResponseEntity<List<Anime>> findByName(@RequestParam(defaultValue = "") String name, @AuthenticationPrincipal UserDetails userDetals) {
   public ResponseEntity<List<Anime>> findByName(@RequestParam(defaultValue = "") String name) {
     return ResponseEntity.ok(animeService.findByName(name));
   }
