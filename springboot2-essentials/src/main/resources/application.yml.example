@@ -9,3 +9,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+security:
+  default-password: password
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
