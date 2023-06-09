@@ -1,0 +1,28 @@
+### create product
+POST {{host}}/products
+Content-Type: application/json
+
+{
+  "name": "any_name",
+  "value": 10
+}
+
+### list products
+
+GET {{host}}/products
+
+### get product by id
+GET {{host}}/products/b108918d-66a0-44ae-aeee-6615f3ed3bb0
+
+### update product by id
+PUT {{host}}/products/b108918d-66a0-44ae-aeee-6615f3ed3bb0
+Content-Type: application/json
+
+{
+  "name": "updated_name",
+  "value": 20
+}
+
+### delete product by id
+DELETE {{host}}/products/b108918d-66a0-44ae-aeee-6615f3ed3bb0
+
