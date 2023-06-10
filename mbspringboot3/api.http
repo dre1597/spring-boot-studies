@@ -12,10 +12,10 @@ Content-Type: application/json
 GET {{host}}/products
 
 ### get product by id
-GET {{host}}/products/b108918d-66a0-44ae-aeee-6615f3ed3bb0
+GET {{host}}/products/{{productId}}
 
 ### update product by id
-PUT {{host}}/products/b108918d-66a0-44ae-aeee-6615f3ed3bb0
+PUT {{host}}/products/{{productId}}
 Content-Type: application/json
 
 {
@@ -24,5 +24,5 @@ Content-Type: application/json
 }
 
 ### delete product by id
-DELETE {{host}}/products/b108918d-66a0-44ae-aeee-6615f3ed3bb0
+DELETE {{host}}/products/{{productId}}
 

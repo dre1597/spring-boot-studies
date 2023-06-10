@@ -9,12 +9,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 public class ProductController {
+  private static final String NOT_FOUND_MESSAGE = "Product not found";
   @Autowired
   ProductRepository productRepository;
 
@@ -22,8 +27,20 @@ public class ProductController {
   public ResponseEntity<List<ProductOutputDto>> findAll() {
     List<ProductModel> products = productRepository.findAll();
 
-    return new ResponseEntity<>(products.stream().map(p -> new ProductOutputDto(p.getId(), p.getName(), p.getValue())).toList(), HttpStatus.OK);
+    List<ProductOutputDto> productsOutput = new ArrayList<>();
+
+    if (!products.isEmpty()) {
+      for (ProductModel product : products) {
+        UUID id = product.getId();
+        ProductOutputDto output = new ProductOutputDto(id, product.getName(), product.getValue());
+        output.add(linkTo(methodOn(ProductController.class).findById(id)).withSelfRel());
+        productsOutput.add(output);
+      }
+    }
+
+    return new ResponseEntity<>(productsOutput, HttpStatus.OK);
   }
+
 
   @PostMapping("/products")
   public ResponseEntity<ProductOutputDto> save(@RequestBody @Valid ProductInputDto productDto) {
@@ -43,11 +60,12 @@ public class ProductController {
     Optional<ProductModel> productOptional = productRepository.findById(id);
 
     if (productOptional.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(NOT_FOUND_MESSAGE);
     }
 
     ProductModel productModel = productOptional.get();
     ProductOutputDto output = new ProductOutputDto(productModel.getId(), productModel.getName(), productModel.getValue());
+    output.add(linkTo(methodOn(ProductController.class).findAll()).withRel("Products list"));
 
     return ResponseEntity.status(HttpStatus.OK).body(output);
   }
@@ -57,7 +75,7 @@ public class ProductController {
     Optional<ProductModel> productOptional = productRepository.findById(id);
 
     if (productOptional.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(NOT_FOUND_MESSAGE);
     }
 
     ProductModel productModel = productOptional.get();
@@ -72,7 +90,7 @@ public class ProductController {
     Optional<ProductModel> productOptional = productRepository.findById(id);
 
     if (productOptional.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(NOT_FOUND_MESSAGE);
     }
 
     productRepository.deleteById(id);
